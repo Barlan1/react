@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>function</title>
+  </head>
+
+  <style>
+    .myclass {
+      color: red;
+    }
+  </style>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    
+    <script type="text/babel">
+      
+      function kwtohp(kw){
+        return kw*1.36;
+      }
+      function Car(){
+        const x="myclass";
+        return (
+          <>
+          <h1 className={x}> My car </h1>
+          <p> It has {kwtohp(218)} horsepower engine </p>
+          </>
+        );
+      }
+
+      
+      const container=document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<Car/>);
+    </script>
+  </body>
+</html>
