@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>table and function</title>
+  </head>
+  <style>
+    .myclass{
+      color:rgb(202, 6, 82);
+      font-weight: bold;
+      font-size: 16px;
+    }
+  </style>
+
+  <body>
+    <div class="js-container"></div>
+    <div class="xs-container"></div>
+
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    
+    <script type="text/babel">
+      
+      const myelement = <input type="text" placeholder="Yogita" />;
+    
+
+    function Car(){
+      const brand="Mahindra";
+      const model="3XO";
+      const name="Yogita";
+      const x="myclass";
+      return (
+        <>
+        <h3>Hello my name is <span className={x}>{name}</span></h3>
+        <h2>My Car</h2>
+        <p className="myclass"> It is  {brand} {/*World!*/} {model} </p>
+         </> 
+      );
+    }
+     
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(myelement);
+
+      const box= document.querySelector('.xs-container');
+      ReactDOM.createRoot(box).render(<Car/>);
+    </script>
+  </body>
+</html>
