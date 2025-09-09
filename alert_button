@@ -1,0 +1,12 @@
+//import React from "react";
+//import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
+
+function Fun() {
+  const myfunc = () => {
+    alert("Hi there!");
+  };
+  return <button onClick={myfunc}>Press me </button>;
+}
+
+createRoot(document.getElementById("root")).render(<Fun />);
