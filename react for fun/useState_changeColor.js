@@ -12,6 +12,10 @@ function Fun() {
       <button onClick={handleColor}> press me</button>
     // we can also do this
     // <h2 onClick={handleColor} >This is {color}</h2>
+
+    //to write without handlecare function in a inline arrow function
+   // <h2 onClick={ () => setColor( "Blue" ) } > this is {color} </h2> 
+      
     </>
   );
 }
