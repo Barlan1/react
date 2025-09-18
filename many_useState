@@ -1,0 +1,28 @@
+import { useState } from "react";
+import { createRoot } from "react-dom/client";
+
+function Fun() {
+  const [color1, setColor1] = useState("");
+  const [color2, setColor2] = useState("");
+  const [color3, setColor3] = useState("");
+  const [color4, setColor4] = useState("");
+
+  return (
+    <>
+      <p>
+        <span onClick={() => setColor1("brown")}>This is the {color1}</span>
+      </p>
+      <p>
+        <span onClick={() => setColor2("blue")}>This is the {color2}</span>
+      </p>
+      <p>
+        <span onClick={() => setColor3("gray")}>This is the {color3}</span>
+      </p>
+      <p>
+        <span onClick={() => setColor4("red")}>This is the {color4}</span>
+      </p>
+    </>
+  );
+}
+
+createRoot(document.getElementById("root")).render(<Fun />);
