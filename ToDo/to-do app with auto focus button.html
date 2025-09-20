@@ -1,0 +1,66 @@
+import react, { useState, useRef, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+import "./input_output.css";
+function ChatInput() {
+  const [text, setText] = useState("");
+  const [output, setOutput] = useState([]);
+  const [disablefocus, setDisablefocus] = useState(true);
+
+  const inputRef = useRef(null);
+
+  function addText() {
+    if (text.trim() === "") {
+      alert("enter text");
+      return;
+    }
+    setOutput([...output, text]);
+    setText("");
+  }
+
+  function deleteButton(index) {
+    setOutput(output.filter((_, i) => i !== index));
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      addText();
+    }
+  }
+
+  useEffect(() => {
+    if (!disablefocus && inputRef) {
+      inputRef.current.focus();
+    }
+  }, [output, disablefocus]);
+
+  return (
+    <div>
+      <h2>This is Input Output App</h2>
+      <input
+        ref={inputRef}
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
+      <button id="addText" onClick={addText}>
+        AddText
+      </button>
+      <ul>
+        {output.map((item, index) => (
+          <li key={index}>
+            {item}
+
+            <button id="delete" onClick={() => deleteButton(index)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+      <button id="focus" onClick={() => setDisablefocus(!disablefocus)}>
+        {disablefocus ? "Enable Auto Focus" : "Disable Auto Focus"}
+      </button>
+    </div>
+  );
+}
+createRoot(document.getElementById("root")).render(<ChatInput />);
