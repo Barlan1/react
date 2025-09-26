@@ -1,0 +1,60 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 20px;
+}
+.app {
+  text-align: center;
+}
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translate(-5px);
+}
+.price {
+  font-weight: bold;
+  color: #007bff;
+}
+.total {
+  font-weight: bold;
+  color: rgb(40, 176, 70);
+}
+.btn-group {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.btn {
+  flex: 1;
+  margin: 0 5px;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn.add {
+  background: #00aeff;
+  color: white;
+}
+.btn.sub {
+  background: #ffc107;
+  color: white;
+}
+.btn.reset {
+  background: #b94420;
+  color: white;
+}
