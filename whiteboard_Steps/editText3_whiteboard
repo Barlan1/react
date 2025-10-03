@@ -1,0 +1,89 @@
+//editText3_whiteboard
+//https://codesandbox.io/p/sandbox/the-function-meta-j98ww2?file=%2Fsrc%2Fcart%2FWhiteboard%2FeditText3_whiteboard.js%3A55%2C20
+import React, { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+
+function App() {
+  const [problem, setProblem] = useState("");
+  const [solution, setSolution] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
+  const [board, setBoard] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("board");
+    if (saved) {
+      setBoard(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("board", JSON.stringify(board));
+  }, [board]);
+
+  const add = () => {
+    if (problem.trim() === "" && solution.trim() === "") return;
+    setBoard([...board, { problem, solution }]);
+    setProblem("");
+    setSolution("");
+  };
+
+  const removeTask = (index) => {
+    setBoard(board.filter((_, i) => i !== index));
+  };
+
+  const updateTask = (index, field, value) => {
+    const newBoard = [...board];
+    newBoard[index][field] = value;
+    setBoard(newBoard);
+  };
+
+  return (
+    <div>
+      <h1>Whiteboard</h1>
+      <input
+        type="text"
+        value={problem}
+        placeholder="Hi vikki"
+        onChange={(e) => setProblem(e.target.value)}
+      />
+      <input
+        type="text"
+        value={solution}
+        placeholder="Hi Yogi"
+        onChange={(e) => setSolution(e.target.value)}
+      />
+      <button onClick={add}>Add</button>
+
+      {board.map((item, i) => (
+        <div key={i}>
+          <b>Quiz:</b>
+          {editIndex === i ? (
+            <input
+              value={item.problem}
+              onChange={(e) => updateTask(i, "problem", e.target.value)}
+              onBlur={() => setEditIndex(null)}
+              onKeyDown={(e) => e.key === "Enter" && setEditIndex(null)}
+            />
+          ) : (
+            <span onClick={() => setEditIndex(i)}>{item.problem}</span>
+          )}
+
+          <br />
+          <b>Ans:</b>
+          {editIndex === i ? (
+            <input
+              value={item.solution}
+              onChange={(e) => updateTask(i, "solution", e.target.value)}
+              onBlur={() => setEditIndex(null)}
+              onKeyDown={(e) => e.key === "Enter" && setEditIndex(null)}
+            />
+          ) : (
+            <span onClick={() => setEditIndex(i)}>{item.solution}</span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+createRoot(document.getElementById("root")).render(<App />);
