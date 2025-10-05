@@ -1,0 +1,119 @@
+import React, { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+
+function App() {
+  const [problem, setProblem] = useState("");
+  const [solution, setSolution] = useState("");
+  const [board, setBoard] = useState([]);
+
+  const [editing, setEditing] = useState({
+    problem: null,
+    solution: null,
+  });
+
+  useEffect(() => {
+    const saved = localStorage.getItem("board");
+    if (saved) {
+      setBoard(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("board", JSON.stringify(board));
+  }, [board]);
+
+  const add = () => {
+    if (problem.trim() === "" && solution.trim() === "") return;
+    setBoard([...board, { problem, solution }]);
+    setProblem("");
+    setSolution("");
+  };
+
+  const editTask = (index, field, value) => {
+    const newBoard = [...board];
+    newBoard[index][field] = value;
+    setBoard(newBoard);
+  };
+
+  const removeTask = (index) => {
+    const newBoard = board.filter((_, i) => i !== index);
+    setBoard(newBoard);
+  };
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>This is whiteBoard</h1>
+      <input
+        type="text"
+        value={problem}
+        onChange={(e) => setProblem(e.target.value)}
+        style={{ padding: "10px", marginRight: "10px" }}
+      />
+      <input
+        type="text"
+        value={solution}
+        onChange={(e) => setSolution(e.target.value)}
+        style={{ padding: "10px", marginRight: "10px" }}
+      />
+      <button onClick={add}>AddTask</button>
+
+      <div style={{ marginTop: "20px" }}>
+        {board.map((item, i) => (
+          <div
+            key={i}
+            style={{
+              marginBottom: "15px",
+              borderBottom: "1px solid #ccc",
+              paddingBottom: "10px",
+              backgroundColor: "#f9f9f9",
+              padding: "10px",
+            }}
+          >
+            <b>Quiz:</b>
+            {editing.problem === i ? (
+              <input
+                value={item.problem}
+                onChange={(e) => editTask(i, "problem", e.target.value)}
+                onBlur={() => setEditing({ ...editing, problem: null })}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && setEditing({ ...editing, problem: null })
+                }
+              />
+            ) : (
+              <span
+                onClick={() => setEditing({ ...editing, problem: i })}
+                style={{ cursor: "pointer" }}
+              >
+                {item.problem}
+              </span>
+            )}
+            <br />
+            <b>Ans:</b>
+            {editing.solution === i ? (
+              <input
+                value={item.solution}
+                onChange={(e) => editTask(i, "solution", e.target.value)}
+                onBlur={() => setEditing({ ...editing, solution: null })}
+                onKeyDown={(e) =>
+                  e.key === "Enter" &&
+                  setEditing({ ...editing, solution: null })
+                }
+              />
+            ) : (
+              <span
+                onClick={() => setEditing({ ...editing, solution: i })}
+                style={{ cursor: "pointer" }}
+              >
+                {item.solution}
+              </span>
+            )}
+
+            <button onClick={() => removeTask(i)}>Remove </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+createRoot(document.getElementById("root")).render(<App />);
